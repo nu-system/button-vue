@@ -1,8 +1,8 @@
-import Dialog from "./src/index.vue";
+import Button from "./src/index.vue";
 
 /* istanbul ignore next */
-Dialog.install = function(Vue) {
-    Vue.component(Dialog.name, Dialog);
+Button.install = function(Vue) {
+    Vue.component(Button.name, Button);
 };
 
-export default Dialog;
+export default Button;

@@ -1,124 +1,140 @@
-# nu-dialog-vue
-
-<iframe src="https://codesandbox.io/embed/vue-template-phc9q?autoresize=1&fontsize=14&hidenavigation=1&module=%2Fsrc%2Fcomponents%2FDialog.vue&view=preview" title="nu-dialog-vue" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+# nu-button-vue
 
 <ClientOnly>
-<DialogDemo/>
+<ButtonDemo/>
 </ClientOnly>
 
-NU 「 no-ui 」 组件库系统 nu-system，弹窗组件 VUE 版本。
+这是 NU 「 no-ui 」 组件库系统 nu-system，按钮组件 VUE 实现。
 
-`@y-fe/nu-dialog-vue` 本身不会输出任何样式，基础样式来自于 [nu-dialog](https://yued-fe.github.io/nu-system/packages/dialog/) , 
-
-## 怎么用？
+## 怎么用?
 
 ```bash
-$ npm i @y-fe/nu-dialog-vue @y-fe/nu-dialog
+$ npm i @y-fe/nu-button-vue @y-fe/nu-button
+```
 
-// or yarn
-$ yarn add @y-fe/nu-dialog-vue @y-fe/nu-dialog
+```bash
+$ yarn add @y-fe/nu-button-vue @y-fe/nu-button
 ```
 
 ### 二次封装
 
-```vue
-
+```vue  
 <script>
-  import NuDialog from "@y-fe/nu-dialog-vue"
-  import "@y-fe/nu-dialog"
-  import "@y-fe/nu-dialog/css/position/middle.css"
-  // import "@y-fe/nu-dialog/css/position/top.css"
-  // import "@y-fe/nu-dialog/css/position/left.css"
-  // import "@y-fe/nu-dialog/css/position/right.css"
-  // import "@y-fe/nu-dialog/css/position/bottom.css"
+  import NuButton from "@y-fe/nu-button-vue";
+  import "@y-fe/nu-button";
+  import "@y-fe/nu-button/css/skins/loading.css";
+  import "@y-fe/nu-button/css/skins/bootstrap.css";
 
-  export default NuDialog;
+  export default {
+    props: {
+      // 设置默认颜色
+      color: {
+        default: 'primary'
+      },
+      // 设置默认变体
+      variant: {
+        default: 'ghost'
+      },
+    },
+    mixins: [NuButton]
+  };
 </script>
 
 <style>
-  /* 规避 position:fixed 的 bug 问题 */
-  .nu_dialog_wrap{
-    position: absolute;
+  .nu_btn{
+    /** 自定义样式 */
   }
 </style>
 ```
 
+设置默认「 颜色 」和「 变体 」的目的是避免每次在使用按钮的时候需要添加对应属性。
+
+因为 `@y-fe/nu-button-vue` 是纯逻辑组件本身不会输出任何样式，在实际项目中使用需要二次封装。
+这里采用的是 [nu-button](https://nu-system.github.io/vanilla/button/) 里面的 bootstrap 皮肤。
+
 ### 使用
 
-```vue
+```vue  
 <template>
-  <div id="app">    
-    <button type="button" @click="dialogOpen = true">打开弹窗</button>            
-    <Dialog :open.sync="dialogOpen" :position="dialogPosition">
-      <select @change="handlePosition">
-        <option value="middle">居中显示</option>
-        <option value="top">居上显示</option>
-        <option value="left">居左显示</option>
-        <option value="right">居右显示</option>
-        <option value="bottom">居下显示</option>
-      </select>
-    </Dialog>
-  </div>
+    <div>
+      <Button>按钮</Button>
+    </div>  
 </template>
 
 <script>
-  import Dialog from "@components/Dialog";
-  
-  export default {
-    name: 'app',
-    data() {
-      return {
-        dialogOpen: false,
-        dialogPosition: 'middle'
-      }
-    },
-    components: {
-      Dialog
-    },
-    methods: {
-        handlePosition(e) {
-         this.dialogPosition = e.target.value;
+    import Button from "@components/Button";
+    export default {
+        components: {
+            Button
         }
     }
-}
 </script>
 ```
 
-nu-dialog-vue 会动态的把弹窗添加到 `body` 标签之后。
+## DOM 结构
 
-## Api
-
-| props   |      类型      | 默认值  |功能 |
-|:----------|:-------------|:------:|------:|
-| :open.sync |  boolean | - | 显示弹窗|
-| :position |  strong | 'middle' | 弹窗位置|
-| :beforeClose |  Func | - | 在关闭之前要做的事 |
-| :isPortal | boolean | 'true' | 是否需要传送门 |
-| :speed | Number | 200 | 动画时长 |
-
-**position 可选值**: `middle`,`top`,`right`,`left`,`bottom`;
-
-**beforeClose**: 如果返回值为 `false` 那么弹窗不会关闭;
-
-## Dom 结构
-
-```vue
-<div v-if="render" class="nu_dialog_wrap" :class="computedClass">
-  <slot name="mask">
-    <label class="nu_dialog_mask" @click="handleClickMask"/>
-  </slot>
-  <slot name="dialog">
-    <div class="nu_dialog">
-      <slot name="close">
-        <label class="nu_dialog_close" @click="handleClickClose">
-          <slot name="close-icon">&times;</slot>
-        </label>
-      </slot>
-      <slot></slot>
-    </div>
-  </slot>
-</div>
+```VUE
+<Button>hello</Button>
+<Button href="." title="hello">hello</Button>
 ```
 
-`nu-dialog-vue` 几乎所有都子组件都可以用 `slot` 重写。
+上面的代码会被渲染成如下的 HTML 结构。
 
+```HTML
+<button class="nu_button" type="button" ><span>hello</span></button>
+<a class="nu_button" href="." title="hello"><span>hello</span></a>
+```
+
+## API
+
+| props   | 类型 | 默认值 | 功能 | DEMO |
+|:-----|:-----:|:-----:|:-----:|:-----:|
+| baseClass |  string | 'nu_btn' | 默认选择器 | - |
+| type |  string | 'button' | 按钮类型 | <ClientOnly><Button type="submit">Submit</Button></ClientOnly> |
+| href |  string | - | 跳转链接|<ClientOnly><Button href=".">按钮</Button></ClientOnly> |
+| color| 'default' &#124; 'primary' &#124; 'secondary' &#124; <br/> 'success' &#124; 'warning' &#124; 'danger' |  'default' | 按钮颜色 | <ClientOnly><Button>按钮</Button></ClientOnly> |
+| primary |  boolean | - | 主按钮 | <ClientOnly><Button primary>按钮</Button></ClientOnly> |
+| secondary |  boolean | - | 次级按钮 | <ClientOnly><Button secondary>按钮</Button></ClientOnly> |
+| warning |  boolean | - | 警告按钮 | <ClientOnly><Button warning>按钮</Button></ClientOnly> |
+| success |  boolean | - | 成功按钮 | <ClientOnly><Button success>按钮</Button></ClientOnly> |
+| danger |  boolean | - | 危险按钮 | <ClientOnly><Button danger>按钮</Button></ClientOnly> |
+| variant| 'fill' &#124; 'ghost' &#124; 'link' | 'fill' | 按钮变体 | <ClientOnly><Button>按钮</Button></ClientOnly> |
+| fill | boolean | - | 实心按钮 | <ClientOnly><Button>按钮</Button></ClientOnly> |
+| ghost |  boolean | - | 幽灵按钮 | <ClientOnly><Button ghost>按钮</Button></ClientOnly> |
+| link |  boolean | - | 链接按钮 | <ClientOnly><Button link>按钮</Button></ClientOnly> |
+| large |  boolean | - | 大按钮 | <ClientOnly><Button large>按钮</Button></ClientOnly> |
+| middle |  boolean | - | 中号按钮 | <ClientOnly><Button middle>按钮</Button></ClientOnly> |
+| small |  boolean | - | 小按钮 | <ClientOnly><Button small>按钮</Button></ClientOnly> |
+| disabled |  boolean | - | 不可用按钮|<ClientOnly><Button disabled>按钮</Button></ClientOnly> |
+| loading |  boolean | - | loading按钮|<ClientOnly><Button loading>按钮</Button></ClientOnly> |
+| capsule |  boolean | - | 圆角按钮|<ClientOnly><Button capsule>按钮</Button></ClientOnly> |
+| block |  boolean | - | 占一行的按钮| 见下面demo |
+
+<ClientOnly>
+<Button block> block 按钮</Button>
+</ClientOnly>
+
+并且除了上表中的属性，其它属性都会直接传到原生 button 上。
+
+## 如何修改样式？
+
+nu-button-vue 会将上所有的 `boolean` 属性，基于以下的 「 class 映射表 」添加对应的 class 到按钮上。想要自定义样式，只需要围绕对应选择器进行开发即可, 样式定义规则可以查看 [nu-button](https://yued-fe.github.io/nu-system/packages/button/)。
+
+| props |  class |
+|:----------|------:|
+| baseClass | .nu_btn |
+| primary | ._primary |
+| secondary | ._secondary |
+| warning | ._warning |
+| success | ._success |
+| danger | ._danger |
+| fill | ._fill |
+| ghost | ._ghost |
+| link | ._link |
+| disabled | ._disabled |
+| loading | ._loading |
+| large | ._large |
+| middle | ._middle |
+| small | ._small |
+| capsule | ._capsule |
+| block | ._block |
