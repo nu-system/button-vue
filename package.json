@@ -1,6 +1,6 @@
 {
   "name": "@_nu/vue-button",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "NU 「 no-ui 」 组件库系统 nu-system，按钮组件 VUE 实现",
   "main": "lib/index.js",
   "author": "yfe-team",
