@@ -5,8 +5,13 @@
   "main": "lib/index.js",
   "author": "yfe-team",
   "license": "MIT",
-  "repository": "git@github.com:nu-system/button.git",
-  "bugs": "https://github.com/nu-system/button-vue/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nu-system/vue-button.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nu-system/vue-button/issues"
+  },
   "homepage": "https://nu-system.github.io/vue/button/",
   "keywords": [
     "ui",
