@@ -1,20 +1,18 @@
-# nu-vue-button
+# Button
 
-[![npm package][npm-badge]][npm]
-
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
-[npm]: https://www.npmjs.org/package/@_nu/vue-button
+[![npm package](https://img.shields.io/npm/v/@_nu/vue-button.svg)](https://www.npmjs.org/package/@_nu/vue-button)
+[![github](https://img.shields.io/github/stars/nu-system/vue-button.svg?style=social)](https://github.com/nu-system/vue-button)
 
 <ClientOnly>
 <ButtonDemo/>
 </ClientOnly>
 
-这是 NU 「 no-ui 」 组件库系统 nu-system，按钮组件 VUE 实现。
+组件库母版系统 [NU-system](https://nu-system.github.io/) 按钮组件 VUE 实现。
 
 ## 怎么用?
 
 ```bash
-$ yarn add @_nu/vue-button @_nu/vanilla-button
+$ yarn add @_nu/vue-button @_nu/css-button
 ```
 
 ### 二次封装
@@ -22,9 +20,9 @@ $ yarn add @_nu/vue-button @_nu/vanilla-button
 ```vue  
 <script>
   import NuButton from "@_nu/vue-button";
-  import "@_nu/vanilla-button";
-  import "@_nu/vanilla-button/css/skins/loading.css";
-  import "@_nu/vanilla-button/css/skins/bootstrap.css";
+  import "@_nu/css-button";
+  import "@_nu/css-button/css/skins/loading.css";
+  import "@_nu/css-button/css/skins/bootstrap.css";
 
   export default {
     props: {
@@ -51,7 +49,7 @@ $ yarn add @_nu/vue-button @_nu/vanilla-button
 设置默认「 颜色 」和「 变体 」的目的是避免每次在使用按钮的时候需要添加对应属性。
 
 因为 `NuButton` 是纯逻辑组件本身不会输出任何样式，在实际项目中使用需要二次封装。
-这里采用的是 [nu-button](https://nu-system.github.io/vanilla/button/) 里面的 bootstrap 皮肤。
+这里采用的是 [nu-button](https://nu-system.github.io/css/button/) 里面的 bootstrap 皮肤。
 
 ### 使用
 

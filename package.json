@@ -2,7 +2,7 @@
   "name": "@_nu/vue-button",
   "version": "0.0.2",
   "description": "NU 「 no-ui 」 组件库系统 nu-system，按钮组件 VUE 实现",
-  "main": "lib/index.js",
+  "main": "lib/index.common.js",
   "author": "yfe-team",
   "license": "MIT",
   "repository": {
@@ -12,6 +12,27 @@
   "bugs": {
     "url": "https://github.com/nu-system/vue-button/issues"
   },
+  "files": [
+    "lib",
+    "CHANGELOG.md",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "devDependencies": {
+    "@vue/cli-service-global": "^3.9.3",
+    "conventional-changelog-cli": "^2.0.21",
+    "cz-conventional-changelog": "3.0.2"
+  },
+  "peerDependencies": {
+    "commitizen": "^4.0.3"
+  },
+  "scripts": {
+    "build": "vue-cli-service build --target lib --name index --dest lib src/index.js",
+    "prepublishOnly": "npm run build",
+    "log": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "commitInit": "commitizen init cz-conventional-changelog --yarn --dev --exact"
+  },
   "homepage": "https://nu-system.github.io/vue/button/",
   "keywords": [
     "ui",
@@ -20,5 +41,10 @@
     "vue",
     "vue-ui",
     "button"
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
